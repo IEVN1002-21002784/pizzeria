@@ -1,0 +1,43 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="grid grid-cols-3 gap-5 mb-3">
+    <div class="flex flex-col">
+      <label class="font-semibold">Nombre</label>
+      <input type="text" placeholder="María Juarez" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500" formControlName="nombre" />
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold">Dirección</label>
+      <input type="text" placeholder="5 de mayo" class="px-2 py-1  border-2 border-solid rounded-md border-zinc-500"
+        formControlName="direccion" />
+    </div>
+    <div class="flex flex-col">
+      <label class="font-semibold">Teléfono</label>
+      <input type="text" placeholder="477-787-23" class="px-2 py-1  border-2 border-solid rounded-md border-zinc-500"
+        formControlName="telefono" />
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="grid grid-cols-2 gap-5">
+      <div class="flex flex-col space-y-2">
+        <span class="font-semibold">Tamaño Pizza</span>
+        <label><input type="radio" name="tamano" value="Chica" formControlName="tamano" /> Chica $40</label>
+        <label><input type="radio" name="tamano" value="Mediana" formControlName="tamano" /> Mediana $80</label>
+        <label><input type="radio" name="tamano" value="Grande" formControlName="tamano" /> Grande $120</label>
+      </div>
+      <div class="flex flex-col space-y-2">
+        <span class="font-semibold">Ingredientes</span>
+        <label><input type="checkbox" formControlName="ingrediente1" value="jamon" /> Jamon $10</label>
+        <label><input type="checkbox" formControlName="ingrediente2" value="pina" /> Piña $10</label>
+        <label><input type="checkbox" formControlName="ingrediente3" value="champinon" /> Champiñones $10</label>
+      </div>
+    </div>
+    <div>
+      <div class="flex flex-col w-1/2">
+        <label class="font-semibold">Num. de Pizzas</label>
+        <input type="number" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500" formControlName="cantidad" />
+      </div>
+      <button type="submit" class="px-4 py-2 mt-4 text-white bg-blue-500 rounded-md">Agregar</button>
+    </div>
+  </div>
+  <div class="flex flex-row justify-between space-x-4">
+  </div>
+</form>

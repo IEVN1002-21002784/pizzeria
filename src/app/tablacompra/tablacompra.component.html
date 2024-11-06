@@ -1,0 +1,43 @@
+<div class="relative overflow-x-auto">
+  <button type="submit" class="px-4 py-2 mt-4 text-white bg-blue-500 rounded-md" (click)="vertabla()">Agregar</button>
+  <form action="" *ngIf="ordenesInfo.length" [formGroup]="formGroup" (ngSubmit)="eliminar()">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" >
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">Seleccionar</th>
+          <th scope="col" class="px-6 py-3">Tamaño</th>
+          <th scope="col" class="px-6 py-3">Ingredientes</th>
+          <th scope="col" class="px-6 py-3">Num Pizzas</th>
+          <th scope="col" class="px-6 py-3">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let orden of ordenesInfo; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <input type="radio" formControlName="id" name="id" [value]="orden.id">
+          </td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ orden.tamano }}
+          </td>
+          <td class="px-6 py-4">
+            {{ orden.ingredientes.join(', ') }}
+          </td>
+          <td class="px-6 py-4">
+            {{ orden.cantidad }}
+          </td>
+          <td class="px-6 py-4">
+            {{ orden.subtotal }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex flex-row justify-between space-x-4">
+      <div>
+        <button type="submit" class="px-4 py-2 mt-4 text-white bg-red-500 rounded-md">Eliminar</button>
+      </div>
+      <div>
+        <button type="button" class="px-4 py-2 mt-4 text-white bg-green-500 rounded-md" (click)="agregar()">Terminar</button>
+      </div>
+    </div>
+  </form>
+</div>
