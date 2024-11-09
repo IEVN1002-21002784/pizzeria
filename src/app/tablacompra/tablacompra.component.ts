@@ -26,7 +26,7 @@ export class TablacompraComponent {
     cantidad: number;
     subtotal: number;
   }[] = []
-  ordenesG:Orden[] = []
+  modal = 'hidden';
   constructor(private fb: FormBuilder,private comunicacion: ComunicacionService){}
   ngOnInit() {
     this.formGroup = this.initForm();
@@ -40,45 +40,22 @@ export class TablacompraComponent {
     });
   }
   vertabla(){
-    console.log('click ver tabla');
-    this.ordenesInfo = [];
-    let id = 0;
-    const datos = localStorage.getItem('ordenes')
-    if(datos){
-      this.ordenesG = JSON.parse(datos)
-      console.log(this.ordenesG);
-      this.ordenesG.forEach(orden => {
-        let info = {
-          id: id,
-          tamano: orden.tamano,
-          ingredientes: orden.ingredientes,
-          cantidad: orden.cantidad,
-          subtotal: orden.subtotal
-        }
-        this.ordenesInfo.push(info);
-        id++;
-      });
-      console.log(this.ordenesInfo);
-    }
+    this.ordenesInfo = this.comunicacion.vercompra();
+    console.log(this.ordenesInfo);
+
   }
   eliminar(): void{
     const {id} = this.formGroup.value;
-    console.log('el id a eliminar es '+ id);
-    const datos = localStorage.getItem('ordenes');
-    if (datos) {
-      this.ordenEl = JSON.parse(datos);
-      if (id >= 0 && id < this.ordenEl.length) {
-        this.ordenEl.splice(id, 1);
-        console.log(this.ordenEl);
-        localStorage.setItem('ordenes', JSON.stringify(this.ordenEl));
-        console.log('Se eliminó el registro');
-        this.vertabla();
-      } else {
-        console.log('Índice no válido.');
-      }
-    }
+    this.comunicacion.eliminarOrden(id);
   }
   agregar():void{
-    console.log('Aqui pon tu api wey');
+    this.modal = 'flex'
   }
+  cerrar():void{
+    this.modal = 'hidden'
+  }
+  confirmar():void{
+    this.comunicacion.agregar();
+  }
+
 }

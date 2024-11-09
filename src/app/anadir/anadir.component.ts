@@ -14,12 +14,13 @@ interface Cliente {
   nombre: string;
   direccion: string;
   telefono: string;
+  fechacompra:string;
 }
 
 @Component({
   selector: 'app-anadir',
   standalone: true,
-  imports: [ReactiveFormsModule, TablacompraComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './anadir.component.html',
   styles: ``
 })
@@ -28,8 +29,10 @@ export class AnadirComponent {
   cliente: Cliente = {
     nombre: '',
     direccion: '',
-    telefono: ''
+    telefono: '',
+    fechacompra: ''
   };
+  orden:Orden[]=[];
 
   constructor(private fb: FormBuilder, private comunicacion: ComunicacionService) {}
 
@@ -48,6 +51,7 @@ export class AnadirComponent {
       nombre: [''],
       direccion: [''],
       telefono: [''],
+      fechacompra: [''],
       tamano: [''],
       ingrediente1: [false],
       ingrediente2: [false],
@@ -61,57 +65,20 @@ export class AnadirComponent {
   }
 
   onSubmit(): void {
-    let subtotalC = 0;
-    const { nombre, direccion, telefono, tamano, ingrediente1, ingrediente2, ingrediente3, cantidad } = this.formGroup.value;
+    const { nombre, direccion, telefono, tamano,fechacompra, ingrediente1, ingrediente2, ingrediente3, cantidad } = this.formGroup.value;
 
 
-    this.cliente = { nombre, direccion, telefono };
-    localStorage.setItem('cliente', JSON.stringify(this.cliente));
-
-
-    const nuevaOrden: Orden = {
+    this.cliente = { nombre, direccion, telefono,fechacompra };
+    this.comunicacion.guardarCliente(this.cliente);
+    const nuevaOrden = {
       tamano: tamano,
-      ingredientes: [],
+      ingrediente1 : ingrediente1,
+      ingrediente2 : ingrediente2,
+      ingrediente3 : ingrediente3,
       cantidad: cantidad,
-      subtotal: 0
     };
-
-    if (ingrediente1) {
-      nuevaOrden.ingredientes.push('Jamon');
-      subtotalC += 10;
-    }
-    if (ingrediente2) {
-      nuevaOrden.ingredientes.push('Piña');
-      subtotalC += 10;
-    }
-    if (ingrediente3) {
-      nuevaOrden.ingredientes.push('Champiñones');
-      subtotalC += 10;
-    }
-
-    switch (tamano) {
-      case 'Chica':
-        subtotalC += 40;
-        break;
-      case 'Mediana':
-        subtotalC += 80;
-        break;
-      case 'Grande':
-        subtotalC += 120;
-        break;
-    }
-    subtotalC = subtotalC * cantidad;
-    nuevaOrden.subtotal = subtotalC;
-
-    const storedOrdenes = localStorage.getItem('ordenes');
-    const ordenes = storedOrdenes ? JSON.parse(storedOrdenes) : [];
-
-
-    ordenes.push(nuevaOrden);
-    localStorage.setItem('ordenes', JSON.stringify(ordenes));
-
-    console.log(ordenes);
-    this.comunicacion.triggerFunction();
+    const order  = this.comunicacion.agregarOrden(nuevaOrden)
+    console.log(order);
 
     this.formGroup.reset({
       direccion: this.formGroup.value.direccion,

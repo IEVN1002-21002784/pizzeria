@@ -1,1 +1,37 @@
-<p>ventas works!</p>
+<h4 class="text-center">Ventas</h4>
+<div>
+  <p class="m-0">Filtrar por</p>
+  <div class="flex">
+    <div class="w-1/2">
+      <input class="form-check-input" type="radio" name="tipo" (change)="filtropor()"
+        id="flexRadioDefault1" value="dia" [(ngModel)]="tipo">
+      <label class="ms-3" for="flexRadioDefault1">Días del mes</label>
+    </div>
+    <div class="w-1/2">
+      <input class="form-check-input" type="radio" name="tipo" (change)="filtropor()"
+        id="flexRadioDefault2" value="mes" [(ngModel)]="tipo">
+      <label class="ms-3" for="flexRadioDefault2">Mes del año</label>
+    </div>
+  </div>
+
+  <form action="" [formGroup]="formulario">
+    <div class="grid grid-cols-2 gap-5 mb-3">
+      <div *ngIf="tipo === 'dia'">
+        <label for="">Filtrar por días del mes</label>
+        <input type="number" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full" min="1" max="31">
+      </div>
+
+      <div *ngIf="tipo === 'mes'">
+        <label for="">Filtrar por mes</label>
+        <select name="mes" id="mes" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full">
+          <option *ngFor="let mes of meses; let i = index" [value]="i + 1">
+            {{ mes }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <button *ngIf="tipo !== ''" type="button" class=" mt-1 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+      Filtar
+    </button>
+  </form>
+</div>
