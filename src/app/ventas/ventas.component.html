@@ -1,37 +1,51 @@
-<h4 class="text-center">Ventas</h4>
+<h1 class="text-center text-2xl">Resumen de ventas</h1>
 <div>
   <p class="m-0">Filtrar por</p>
-  <div class="flex">
-    <div class="w-1/2">
-      <input class="form-check-input" type="radio" name="tipo" (change)="filtropor()"
-        id="flexRadioDefault1" value="dia" [(ngModel)]="tipo">
-      <label class="ms-3" for="flexRadioDefault1">Días del mes</label>
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="flex">
+      <div class="w-1/2">
+        <input class="form-check-input" type="radio" name="tipo"
+          id="flexRadioDefault1" value="dia" formControlName="tipo">
+        <label class="ms-3" for="flexRadioDefault1">Días del mes</label>
+      </div>
+      <div class="w-1/2">
+        <input class="form-check-input" type="radio" name="tipo"
+          id="flexRadioDefault2" value="mes" formControlName="tipo">
+        <label class="ms-3" for="flexRadioDefault2">Mes del año</label>
+      </div>
     </div>
-    <div class="w-1/2">
-      <input class="form-check-input" type="radio" name="tipo" (change)="filtropor()"
-        id="flexRadioDefault2" value="mes" [(ngModel)]="tipo">
-      <label class="ms-3" for="flexRadioDefault2">Mes del año</label>
-    </div>
-  </div>
-
-  <form action="" [formGroup]="formulario">
     <div class="grid grid-cols-2 gap-5 mb-3">
-      <div *ngIf="tipo === 'dia'">
+      <div *ngIf="formulario.get('tipo')?.value === 'dia'">
         <label for="">Filtrar por días del mes</label>
-        <input type="number" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full" min="1" max="31">
+        <input type="number" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full" min="1" max="31" formControlName="dia">
       </div>
 
-      <div *ngIf="tipo === 'mes'">
+      <div *ngIf="formulario.get('tipo')?.value === 'mes'">
         <label for="">Filtrar por mes</label>
-        <select name="mes" id="mes" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full">
+        <select name="mes" id="mes" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full" formControlName="mes">
           <option *ngFor="let mes of meses; let i = index" [value]="i + 1">
             {{ mes }}
           </option>
         </select>
       </div>
     </div>
-    <button *ngIf="tipo !== ''" type="button" class=" mt-1 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-      Filtar
+    <button *ngIf="formulario.get('tipo')?.value !== ''" type="submit" class=" mt-1 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+      Filtrar
     </button>
   </form>
+</div>
+<div *ngIf="resultadoF && resultadoF.length">
+  <div *ngFor="let ordenF of resultadoF">
+    <p class="text-center text-lg">{{ ordenF.nombre }} Total: {{ ordenF.total }}</p>
+  </div>
+  <p class="text-right">Las ventas totales son: {{ventasTotal}}</p>
+</div>
+<div [style.display]="mensajerror" class=" items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+  <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+  </svg>
+  <span class="sr-only">Info</span>
+  <div>
+    <span class="font-medium">No hay resultados!</span> No hay ventas con esas condiciones
+  </div>
 </div>

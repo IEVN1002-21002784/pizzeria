@@ -16,7 +16,10 @@ export class VentasComponent implements OnInit {
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
   ];
-  tipo: string = ''; // Variable para almacenar el tipo seleccionado
+  tipo: string = '';
+  resultadoF: { nombre: string; total: number; fecha_compra: string | null }[] | null | undefined = [];
+  ventasTotal:number = 0;
+  mensajerror:string = 'none';
   constructor(private fb: FormBuilder, private comunicacion: ComunicacionService) {}
 
   ngOnInit() {
@@ -25,12 +28,34 @@ export class VentasComponent implements OnInit {
 
   initForm(): FormGroup {
     return this.fb.group({
-      tipo: [this.tipo], // Establece el valor inicial del formulario
+      tipo: [this.tipo],
+      dia :[''],
+      mes: ['']
     });
   }
 
-  filtropor() {
-    // Esta función ahora actualiza la variable `tipo` al seleccionar un radio button.
-    // No es necesario cambiar la visibilidad de los elementos en el TS, ya que usamos *ngIf en el HTML.
-  }
+  onSubmit(): void {
+    this.ventasTotal = 0;
+    let fechafiltro;
+    const { tipo, dia, mes } = this.formulario.value;
+
+    if (tipo === 'dia') {
+        fechafiltro = dia;
+    } else if (tipo === 'mes') {
+        fechafiltro = mes;
+    }
+
+    this.resultadoF = this.comunicacion.filtrar(tipo, fechafiltro);
+
+    if (Array.isArray(this.resultadoF) && this.resultadoF.length > 0) {
+        this.mensajerror = 'none';
+        this.resultadoF.forEach(resultado => {
+            this.ventasTotal += resultado.total;
+        });
+    } else {
+        this.mensajerror = 'flex';
+    }
+    console.log(this.mensajerror);
+}
+
 }

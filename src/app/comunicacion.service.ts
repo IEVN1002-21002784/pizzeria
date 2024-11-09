@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { PreloadAllModules } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -144,6 +145,7 @@ export class ComunicacionService {
       return []
     }
   }
+
   agregar(){
     let total = 0;
     const cliente = this.ObtenerCliente();
@@ -156,6 +158,11 @@ export class ComunicacionService {
         ordenesGuardas.forEach(orden => {
           total += orden.subtotal;
         });
+    }
+    if(fechacompra === ""){
+      const fecha = new Date();
+      const fechacompra = fecha.toISOString().split('T')[0];
+      console.log(fechacompra);
     }
     const nuevaOrden: OrdenesGuardadas ={
       nombre: nombre,
@@ -173,8 +180,38 @@ export class ComunicacionService {
     localStorage.removeItem('cliente');
     window.location.reload();
   }
-  filtrar(){
 
+  filtrar(opcion: string, fechafiltro: string | number) {
+    let ventasJ: { nombre: string; total: number; fecha_compra: string | null }[][] = [];
+    const ventas = localStorage.getItem('OrdenesGuardas');
+
+    if (ventas) {
+        ventasJ = JSON.parse(ventas);
+    }
+    const ventasPlanas = ventasJ.flat();
+    const filtroTexto = String(fechafiltro).padStart(2, '0');
+
+    let ventasFiltradas;
+
+    if (opcion === 'dia') {
+        ventasFiltradas = ventasPlanas.filter(element => {
+            if (element.fecha_compra) {
+                const [, , dia] = element.fecha_compra.split('-');
+                return dia === filtroTexto;
+            }
+            return false;
+        });
+    } else if (opcion === 'mes') {
+        ventasFiltradas = ventasPlanas.filter(element => {
+            if (element.fecha_compra) {
+                const [, mes] = element.fecha_compra.split('-');
+                return mes === filtroTexto;
+            }
+            return false;
+        });
+    }
+
+    return ventasFiltradas;
   }
 
 }

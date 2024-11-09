@@ -79,7 +79,10 @@ export class AnadirComponent {
     };
     const order  = this.comunicacion.agregarOrden(nuevaOrden)
     console.log(order);
-
+    this.formGroup.get('nombre')?.disable();
+    this.formGroup.get('direccion')?.disable();
+    this.formGroup.get('telefono')?.disable();
+    this.formGroup.get('fechacompra')?.disable();
     this.formGroup.reset({
       direccion: this.formGroup.value.direccion,
       nombre: this.formGroup.value.nombre,
