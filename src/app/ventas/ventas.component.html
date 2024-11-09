@@ -1,51 +1,45 @@
-<h1 class="text-center text-2xl">Resumen de ventas</h1>
-<div>
-  <p class="m-0">Filtrar por</p>
+<h1 class="text-center text-2xl font-semibold mb-4">Resumen de ventas</h1>
+<div class="p-4 bg-gray-50 rounded-lg shadow-md">
+  <p class="m-0 text-gray-700 font-medium">Filtrar por</p>
   <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-    <div class="flex">
-      <div class="w-1/2">
-        <input class="form-check-input" type="radio" name="tipo"
-          id="flexRadioDefault1" value="dia" formControlName="tipo">
-        <label class="ms-3" for="flexRadioDefault1">Días del mes</label>
+    <div class="flex space-x-4 my-2">
+      <div class="w-1/2 flex items-center">
+        <input class="form-check-input" type="radio" name="tipo" id="flexRadioDefault1" value="dia" formControlName="tipo">
+        <label class="ml-2 text-gray-700" for="flexRadioDefault1">Días del mes</label>
       </div>
-      <div class="w-1/2">
-        <input class="form-check-input" type="radio" name="tipo"
-          id="flexRadioDefault2" value="mes" formControlName="tipo">
-        <label class="ms-3" for="flexRadioDefault2">Mes del año</label>
+      <div class="w-1/2 flex items-center hidden">
+        <input class="form-check-input" type="radio" name="tipo" id="flexRadioDefault2" value="mes" formControlName="tipo">
+        <label class="ml-2 text-gray-700" for="flexRadioDefault2">Mes del año</label>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-5 mb-3">
+    <div class="grid grid-cols-2 gap-5 mb-4">
       <div *ngIf="formulario.get('tipo')?.value === 'dia'">
-        <label for="">Filtrar por días del mes</label>
-        <input type="number" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full" min="1" max="31" formControlName="dia">
+        <label class="block mb-1 text-sm font-medium text-gray-700">Filtrar por días del mes</label>
+       <select name="" id="" formControlName="dia" name="dia" class="px-3 py-2 border border-gray-300 rounded-md w-full focus:border-blue-500 focus:ring focus:ring-blue-200" >
+        <option *ngFor="let dia of diasemana; let i = index" [value]="dia">{{ dia }}</option>
+       </select>
       </div>
-
       <div *ngIf="formulario.get('tipo')?.value === 'mes'">
-        <label for="">Filtrar por mes</label>
-        <select name="mes" id="mes" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500 w-full" formControlName="mes">
-          <option *ngFor="let mes of meses; let i = index" [value]="i + 1">
-            {{ mes }}
-          </option>
+        <label class="block mb-1 text-sm font-medium text-gray-700">Filtrar por mes</label>
+        <select name="mes" id="mes" class="px-3 py-2 border border-gray-300 rounded-md w-full focus:border-blue-500 focus:ring focus:ring-blue-200" formControlName="mes">
+          <option *ngFor="let mes of meses; let i = index" [value]="i + 1">{{ mes }}</option>
         </select>
       </div>
     </div>
-    <button *ngIf="formulario.get('tipo')?.value !== ''" type="submit" class=" mt-1 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+    
+    <button *ngIf="formulario.get('tipo')?.value !== ''" type="submit"class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+      <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
       Filtrar
-    </button>
+      </span>
+      </button>
   </form>
 </div>
-<div *ngIf="resultadoF && resultadoF.length">
-  <div *ngFor="let ordenF of resultadoF">
-    <p class="text-center text-lg">{{ ordenF.nombre }} Total: {{ ordenF.total }}</p>
+<div *ngIf="resultadoF && resultadoF.length" class="mt-4 p-4 bg-gray-50 rounded-lg shadow-md">
+  <div *ngFor="let ordenF of resultadoF" class="mb-2">
+    <p class="text-center text-lg text-gray-800">{{ ordenF.nombre }} - Total: {{ ordenF.total }}</p>
   </div>
-  <p class="text-right">Las ventas totales son: {{ventasTotal}}</p>
+  <p class="text-right font-semibold text-gray-700">Las ventas totales son: {{ ventasTotal }}</p>
 </div>
-<div [style.display]="mensajerror" class=" items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-  <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-  </svg>
-  <span class="sr-only">Info</span>
-  <div>
-    <span class="font-medium">No hay resultados!</span> No hay ventas con esas condiciones
-  </div>
+<div [style.display]="mensajerror" class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+  <p>no hay busqueda</p>
 </div>

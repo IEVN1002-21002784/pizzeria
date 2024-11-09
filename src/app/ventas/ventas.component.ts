@@ -12,6 +12,10 @@ import { ComunicacionService } from '../comunicacion.service';
 })
 export class VentasComponent implements OnInit {
   formulario!: FormGroup;
+  diasemana: string[] = [
+    'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado',
+    'Domingo'
+  ];
   meses: string[] = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'

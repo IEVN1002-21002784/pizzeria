@@ -188,20 +188,25 @@ export class ComunicacionService {
     if (ventas) {
         ventasJ = JSON.parse(ventas);
     }
-    const ventasPlanas = ventasJ.flat();
-    const filtroTexto = String(fechafiltro).padStart(2, '0');
 
+    const ventasPlanas = ventasJ.flat();
     let ventasFiltradas;
 
     if (opcion === 'dia') {
+        const diasSemana = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+
         ventasFiltradas = ventasPlanas.filter(element => {
             if (element.fecha_compra) {
-                const [, , dia] = element.fecha_compra.split('-');
-                return dia === filtroTexto;
+                const [year, month, day] = element.fecha_compra.split('-').map(Number);
+                const fecha = new Date(year, month - 1, day);
+                const diaSemana = diasSemana[fecha.getDay()];
+                return diaSemana.toLowerCase() === fechafiltro.toString().toLowerCase();
             }
             return false;
         });
     } else if (opcion === 'mes') {
+        const filtroTexto = String(fechafiltro).padStart(2, '0');
+
         ventasFiltradas = ventasPlanas.filter(element => {
             if (element.fecha_compra) {
                 const [, mes] = element.fecha_compra.split('-');
@@ -212,7 +217,8 @@ export class ComunicacionService {
     }
 
     return ventasFiltradas;
-  }
+}
+
 
 }
 

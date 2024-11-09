@@ -1,49 +1,49 @@
-<h1 class="text-center text-2xl ">Generar pedido</h1>
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-  <div class="grid grid-cols-4 gap-5 mb-3">
+<h1 class="text-center text-2xl font-semibold mb-6">Generar pedido</h1>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="space-y-6">
+  <div class="grid grid-cols-4 gap-5 mb-4">
     <div class="flex flex-col">
-      <label class="font-semibold">Nombre</label>
-      <input type="text" placeholder="María Juarez" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500" formControlName="nombre" />
+      <label class="font-semibold text-gray-700">Nombre</label>
+      <input type="text" placeholder="María Juarez" class="px-3 py-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200" formControlName="nombre" />
     </div>
     <div class="flex flex-col">
-      <label class="font-semibold">Dirección</label>
-      <input type="text" placeholder="5 de mayo" class="px-2 py-1  border-2 border-solid rounded-md border-zinc-500"
-        formControlName="direccion" />
+      <label class="font-semibold text-gray-700">Dirección</label>
+      <input type="text" placeholder="5 de mayo" class="px-3 py-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200" formControlName="direccion" />
     </div>
     <div class="flex flex-col">
-      <label class="font-semibold">Teléfono</label>
-      <input type="text" placeholder="477-787-23" class="px-2 py-1  border-2 border-solid rounded-md border-zinc-500"
-        formControlName="telefono" />
+      <label class="font-semibold text-gray-700">Teléfono</label>
+      <input type="text" placeholder="477-787-23" class="px-3 py-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200" formControlName="telefono" />
     </div>
     <div class="flex flex-col">
-      <label class="font-semibold">Fecha de compra</label>
-      <input type="date" class="px-2 py-1  border-2 border-solid rounded-md border-zinc-500"
-        formControlName="fechacompra" name="fechacompra" />
+      <label class="font-semibold text-gray-700">Fecha de compra</label>
+      <input type="date" class="px-3 py-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200" formControlName="fechacompra" name="fechacompra" />
     </div>
   </div>
-  <div class="grid grid-cols-2 gap-6">
+  <div class="grid grid-cols-2 gap-6 mb-4">
     <div class="grid grid-cols-2 gap-5">
       <div class="flex flex-col space-y-2">
-        <span class="font-semibold">Tamaño Pizza</span>
-        <label><input type="radio" name="tamano" value="Chica" formControlName="tamano" /> Chica $40</label>
-        <label><input type="radio" name="tamano" value="Mediana" formControlName="tamano" /> Mediana $80</label>
-        <label><input type="radio" name="tamano" value="Grande" formControlName="tamano" /> Grande $120</label>
+        <span class="font-semibold text-gray-700">Tamaño Pizza</span>
+        <label class="text-gray-600"><input type="radio" name="tamano" value="Chica" formControlName="tamano" class="mr-2" /> Chica $40</label>
+        <label class="text-gray-600"><input type="radio" name="tamano" value="Mediana" formControlName="tamano" class="mr-2" /> Mediana $80</label>
+        <label class="text-gray-600"><input type="radio" name="tamano" value="Grande" formControlName="tamano" class="mr-2" /> Grande $120</label>
       </div>
       <div class="flex flex-col space-y-2">
-        <span class="font-semibold">Ingredientes</span>
-        <label><input type="checkbox" formControlName="ingrediente1" value="jamon" /> Jamon $10</label>
-        <label><input type="checkbox" formControlName="ingrediente2" value="pina" /> Piña $10</label>
-        <label><input type="checkbox" formControlName="ingrediente3" value="champinon" /> Champiñones $10</label>
+        <span class="font-semibold text-gray-700">Ingredientes</span>
+        <label class="text-gray-600"><input type="checkbox" formControlName="ingrediente1" value="jamon" class="mr-2" /> Jamón $10</label>
+        <label class="text-gray-600"><input type="checkbox" formControlName="ingrediente2" value="pina" class="mr-2" /> Piña $10</label>
+        <label class="text-gray-600"><input type="checkbox" formControlName="ingrediente3" value="champinon" class="mr-2" /> Champiñones $10</label>
       </div>
     </div>
-    <div>
-      <div class="flex flex-col w-1/2">
-        <label class="font-semibold">Num. de Pizzas</label>
-        <input type="number" class="px-2 py-1 border-2 border-solid rounded-md border-zinc-500" formControlName="cantidad" />
+    <div class="flex flex-col items-start">
+      <div class="flex flex-col w-full mb-3">
+        <label class="font-semibold text-gray-700">Num. de Pizzas</label>
+        <input type="number" class="px-3 py-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 w-full" formControlName="cantidad" />
       </div>
-      <button type="submit" class="px-4 py-2 mt-4 text-white bg-blue-500 rounded-md">Agregar</button>
+     
+      <button type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+        Pedir
+        </span>
+        </button>
     </div>
-  </div>
-  <div class="flex flex-row justify-between space-x-4">
   </div>
 </form>
